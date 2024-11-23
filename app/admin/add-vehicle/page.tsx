@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 interface VehicleData {
   year: string;
@@ -10,6 +10,11 @@ interface VehicleData {
   model: string;
   clientId: string;
   file: File | null;
+}
+
+interface User {
+  _id: string;
+  name: string;
 }
 
 export default function AddVehiclePage() {
@@ -26,13 +31,32 @@ export default function AddVehiclePage() {
     clientId: "",
     file: null,
   });
+  const [users, setUsers] = useState<User[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  useEffect(() => {
+    async function getNonAdminUsers() {
+      try {
+        const response = await fetch("/api/getAllUsers");
+        if (response.ok) {
+          const users = await response.json();
+          setUsers(users);
+        }
+      } catch (error) {
+        //
+      }
+    }
+
+    getNonAdminUsers();
+  }, []);
+
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const { year, make, model, clientId, file } = newVehicle;
+
+    console.log(year, make, model, clientId, file);
 
     if (!year || !make || !model || !clientId || !file) {
       setErrorMessage("Please fill out all fields.");
@@ -80,6 +104,10 @@ export default function AddVehiclePage() {
     }
   }
 
+  function onClientSelection(e: ChangeEvent<HTMLSelectElement>) {
+    setNewVehicle({ ...newVehicle, clientId: e.target.value });
+  }
+
   return (
     <form onSubmit={onFormSubmit}>
       <div className="p-8 rounded-lg flex flex-col">
@@ -115,16 +143,19 @@ export default function AddVehiclePage() {
               setNewVehicle({ ...newVehicle, model: e.target.value })
             }
           />
-          <input
-            value={newVehicle.clientId}
-            required
-            type="text"
-            placeholder="Client"
-            className="mb-2 border border-1 border-gray px-2 w-1/4 rounded-md"
+          <select
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, clientId: e.target.value })
             }
-          />
+          >
+            <option value="">Select Client</option>
+            {users &&
+              users.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.name}
+                </option>
+              ))}
+          </select>
           <label>Upload Image</label>
           <input
             type="file"

@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import VehicleCard from "../../../components/VehicleCard";
 
 interface Vehicle {
-  id: string;
+  _id: string;
   year: string;
   make: string;
   model: string;
-  image_url: string;
-  client: string;
+  imageUrl: string;
+  clientId: string;
 }
 
 export default function UpdateVehicle() {
@@ -34,14 +34,14 @@ export default function UpdateVehicle() {
   }, []);
 
   return (
-    <div>
+    <>
       {vehicles.length > 0 ? (
         vehicles.map((vehicle) => (
-          <VehicleCard key={vehicle.id} vehicleData={vehicle} />
+          <VehicleCard key={vehicle._id} vehicleData={vehicle} />
         ))
       ) : (
         <p>Loading vehicles...</p>
       )}
-    </div>
+    </>
   );
 }
