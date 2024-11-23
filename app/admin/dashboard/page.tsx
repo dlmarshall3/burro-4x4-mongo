@@ -4,12 +4,12 @@ export default function AdminDashboard() {
   return (
     <div className="flex flex-col">
       <Link href="/admin/add-vehicle">
-        <button className="w-1/4 p-2 bg-green-500 hover:bg-green-300 mb-2 rounded-full shadow-lg">
+        <button className="mb-2 w-1/4 rounded-full bg-green-500 p-2 shadow-lg hover:bg-green-300">
           Add vehicle
         </button>
       </Link>
       <Link href="/admin/vehicles">
-        <button className="w-1/4 p-2 bg-yellow-500 hover:bg-yellow-300 rounded-full shadow-lg">
+        <button className="w-1/4 rounded-full bg-yellow-500 p-2 shadow-lg hover:bg-yellow-300">
           Update vehicle
         </button>
       </Link>
