@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface VehicleDashboardCardProps {
   vehicleData: {
@@ -18,11 +19,11 @@ export default function VehicleDashboardCard({
   const { imageUrl, year, make, model, clientName, _id } = vehicleData;
   return (
     <div className="mb-4 mr-12 flex h-full w-full flex-col rounded-lg border p-4 text-center shadow-lg hover:bg-white hover:bg-opacity-75 lg:mb-0 lg:w-1/3">
-      <img
+      <Image
         src={imageUrl}
         alt={`${make} ${model}`}
         height={100}
-        width={100}
+        width={400}
         className="mb-4 w-full"
       />
       <div className="mb-2">

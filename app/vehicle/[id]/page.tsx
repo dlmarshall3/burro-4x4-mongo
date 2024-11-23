@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
+import Image from "next/image";
 
 interface Vehicle {
   vehicle: {
@@ -49,14 +50,19 @@ export default function VehiclePage({
         {vehicle?.vehicle?.year} {vehicle?.vehicle.make}{" "}
         {vehicle?.vehicle.model}
       </h2>
-      <img src={vehicle?.vehicle.imageUrl} />
+      <Image
+        src={vehicle?.vehicle.imageUrl}
+        alt={"a"}
+        width={400}
+        height={100}
+      />
       <div>
         {vehicle?.vehicleUpdates.map((update) => (
           <div key={update._id}>
             <h1>{update.date}</h1>
             <p>{update.update}</p>
             {update.imageUrls.map((url) => (
-              <img src={url} key={url} />
+              <Image src={url} key={url} alt={"b"} height={100} width={200} />
             ))}
           </div>
         ))}
