@@ -9,6 +9,7 @@ interface VehicleData {
   make: string;
   model: string;
   clientId: string;
+  clientName: string;
   file: File | null;
 }
 
@@ -29,6 +30,7 @@ export default function AddVehiclePage() {
     make: "",
     model: "",
     clientId: "",
+    clientName: "",
     file: null,
   });
   const [users, setUsers] = useState<User[]>([]);
@@ -54,11 +56,9 @@ export default function AddVehiclePage() {
 
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const { year, make, model, clientId, file } = newVehicle;
+    const { year, make, model, clientId, file, clientName } = newVehicle;
 
-    console.log(year, make, model, clientId, file);
-
-    if (!year || !make || !model || !clientId || !file) {
+    if (!year || !make || !model || !clientId || !file || !clientName) {
       setErrorMessage("Please fill out all fields.");
       return;
     }
@@ -68,6 +68,7 @@ export default function AddVehiclePage() {
     formData.append("make", make);
     formData.append("model", model);
     formData.append("clientId", clientId);
+    formData.append("clientName", clientName);
     formData.append("file", file);
 
     const response = await fetch("/api/addVehicle", {
@@ -86,6 +87,7 @@ export default function AddVehiclePage() {
         make: "",
         model: "",
         clientId: "",
+        clientName: "",
         file: null,
       });
       if (fileInputRef.current) {
@@ -105,7 +107,14 @@ export default function AddVehiclePage() {
   }
 
   function onClientSelection(e: ChangeEvent<HTMLSelectElement>) {
-    setNewVehicle({ ...newVehicle, clientId: e.target.value });
+    const selectedUser = users.find((user) => user._id === e.target.value);
+    if (selectedUser) {
+      setNewVehicle({
+        ...newVehicle,
+        clientId: selectedUser._id,
+        clientName: selectedUser.name,
+      });
+    }
   }
 
   return (
@@ -143,11 +152,7 @@ export default function AddVehiclePage() {
               setNewVehicle({ ...newVehicle, model: e.target.value })
             }
           />
-          <select
-            onChange={(e) =>
-              setNewVehicle({ ...newVehicle, clientId: e.target.value })
-            }
-          >
+          <select onChange={onClientSelection} value={newVehicle.clientId}>
             <option value="">Select Client</option>
             {users &&
               users.map((user) => (

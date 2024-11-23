@@ -13,9 +13,10 @@ export async function POST(req: Request) {
   const make = formData.get("make") as string;
   const model = formData.get("model") as string;
   const clientId = formData.get("clientId") as string;
+  const clientName = formData.get("clientName") as string;
   const file = formData.get("file") as File;
 
-  if (!year || !make || !model || !clientId || !file) {
+  if (!year || !make || !model || !clientId || !file || !clientName) {
     return new Response("All fields are required.", { status: 400 });
   }
 
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
       make,
       model,
       clientId,
+      clientName,
       imageUrl,
     });
 

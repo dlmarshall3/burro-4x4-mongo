@@ -3,6 +3,7 @@ import mongoose, { Schema, model } from "mongoose";
 export interface VehicleDocument {
   _id: string;
   clientId: string;
+  clientName: string;
   year: string;
   make: string;
   model: string;
@@ -28,6 +29,10 @@ const VehicleSchema = new Schema<VehicleDocument>(
       required: true,
     },
     imageUrl: {
+      type: String,
+      required: true,
+    },
+    clientName: {
       type: String,
       required: true,
     },

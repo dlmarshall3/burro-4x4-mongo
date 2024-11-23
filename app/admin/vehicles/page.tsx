@@ -10,6 +10,7 @@ interface Vehicle {
   model: string;
   imageUrl: string;
   clientId: string;
+  clientName: string;
 }
 
 export default function UpdateVehicle() {
@@ -34,7 +35,7 @@ export default function UpdateVehicle() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-row flex-wrap">
       {vehicles.length > 0 ? (
         vehicles.map((vehicle) => (
           <VehicleCard key={vehicle._id} vehicleData={vehicle} />
@@ -42,6 +43,6 @@ export default function UpdateVehicle() {
       ) : (
         <p>Loading vehicles...</p>
       )}
-    </>
+    </div>
   );
 }
