@@ -8,7 +8,7 @@ interface VehicleData {
   year: string;
   make: string;
   model: string;
-  client: string;
+  clientId: string;
   file: File | null;
 }
 
@@ -23,7 +23,7 @@ export default function AddVehiclePage() {
     year: "",
     make: "",
     model: "",
-    client: "",
+    clientId: "",
     file: null,
   });
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,9 +32,9 @@ export default function AddVehiclePage() {
 
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const { year, make, model, client, file } = newVehicle;
+    const { year, make, model, clientId, file } = newVehicle;
 
-    if (!year || !make || !model || !client || !file) {
+    if (!year || !make || !model || !clientId || !file) {
       setErrorMessage("Please fill out all fields.");
       return;
     }
@@ -43,7 +43,7 @@ export default function AddVehiclePage() {
     formData.append("year", year);
     formData.append("make", make);
     formData.append("model", model);
-    formData.append("client", client);
+    formData.append("clientId", clientId);
     formData.append("file", file);
 
     const response = await fetch("/api/addVehicle", {
@@ -61,7 +61,7 @@ export default function AddVehiclePage() {
         year: "",
         make: "",
         model: "",
-        client: "",
+        clientId: "",
         file: null,
       });
       if (fileInputRef.current) {
@@ -116,13 +116,13 @@ export default function AddVehiclePage() {
             }
           />
           <input
-            value={newVehicle.client}
+            value={newVehicle.clientId}
             required
             type="text"
             placeholder="Client"
             className="mb-2 border border-1 border-gray px-2 w-1/4 rounded-md"
             onChange={(e) =>
-              setNewVehicle({ ...newVehicle, client: e.target.value })
+              setNewVehicle({ ...newVehicle, clientId: e.target.value })
             }
           />
           <label>Upload Image</label>

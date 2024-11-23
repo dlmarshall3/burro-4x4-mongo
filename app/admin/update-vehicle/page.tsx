@@ -18,7 +18,7 @@ export default function UpdateVehicle() {
   useEffect(() => {
     async function fetchVehicles() {
       try {
-        const response = await fetch("/api/updateVehicle");
+        const response = await fetch("/api/getAllVehicles");
         if (response.ok) {
           const jsonVehicles = await response.json();
           setVehicles(jsonVehicles);
