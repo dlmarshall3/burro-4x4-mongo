@@ -17,10 +17,7 @@ export default function VehicleDashboardCard({
 }: VehicleDashboardCardProps) {
   const { imageUrl, year, make, model, clientName, _id } = vehicleData;
   return (
-    <Link
-      href={`/admin/update-vehicle/${_id}`}
-      className="flex flex-col border rounded-lg shadow-lg mr-12 p-4 w-1/4 text-center hover:bg-white hover:bg-opacity-75 h-full"
-    >
+    <div className="flex flex-col border rounded-lg shadow-lg mr-12 p-4 w-1/4 text-center hover:bg-white hover:bg-opacity-75 h-full">
       <img
         src={imageUrl}
         alt={`${make} ${model}`}
@@ -34,6 +31,8 @@ export default function VehicleDashboardCard({
         </h3>
       </div>
       <div>{clientName}</div>
-    </Link>
+      <Link href={`/vehicle/${_id}`}>View</Link>
+      <Link href={`/admin/update-vehicle/${_id}`}>Update</Link>
+    </div>
   );
 }

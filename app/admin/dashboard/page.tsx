@@ -8,7 +8,7 @@ export default function AdminDashboard() {
           Add vehicle
         </button>
       </Link>
-      <Link href="/admin/update-vehicle">
+      <Link href="/admin/vehicles">
         <button className="w-1/4 p-2 bg-yellow-500 hover:bg-yellow-300 rounded-full shadow-lg">
           Update vehicle
         </button>
