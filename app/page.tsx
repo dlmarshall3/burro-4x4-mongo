@@ -9,7 +9,7 @@ export default function Home() {
     redirect("/login");
   }
 
-  if (session?.user.admin) redirect("/admin/dashboard");
+  if (session?.user.admin === true) redirect("/admin/dashboard");
 
-  if(!session?.user.admin) redirect('/client/dashboard')
+  if(session?.user.admin === false) redirect('/client/dashboard')
 }
