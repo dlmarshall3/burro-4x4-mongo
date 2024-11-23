@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 export interface VehicleUpdate {
   _id: string;
-  clientId: string;
+  vehicleId: string;
   update: string;
   date: string;
   imageUrls: Array<string>;
@@ -10,7 +10,7 @@ export interface VehicleUpdate {
 
 const VehicleUpdateSchema = new Schema<VehicleUpdate>(
   {
-    clientId: {
+    vehicleId: {
       type: String,
       required: true,
     },

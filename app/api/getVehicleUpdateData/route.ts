@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     }
 
     const vehicleUpdates = await VehicleUpdate.find({
-      clientId: vehicle.clientId,
+      vehicleId: vehicle._id,
     });
 
     // okay if there are no vehicle updates

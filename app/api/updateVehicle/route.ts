@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
 
     const newUpdate = new VehicleUpdate({
-      clientId,
+      vehicleId,
       update,
       date,
       imageUrls,
