@@ -35,7 +35,9 @@ export default function VehiclePage({
         if (reqVehicle) {
           setVehicle(reqVehicle);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     fetchVehicleData();

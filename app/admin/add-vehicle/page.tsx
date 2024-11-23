@@ -47,7 +47,7 @@ export default function AddVehiclePage() {
           setUsers(users);
         }
       } catch (error) {
-        //
+        console.log(error);
       }
     }
 

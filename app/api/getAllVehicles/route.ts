@@ -1,12 +1,13 @@
 import { connectDB } from "@/lib/mongodb";
 import Vehicle from "../../../models/Vehicle";
-import mongoose from "mongoose";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest, res: NextResponse) {
+export async function GET() {
   try {
     await connectDB();
     const vehicles = await Vehicle.find({});
     return NextResponse.json(vehicles);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -1,6 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
 import Vehicle from "../../../models/Vehicle";
-import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import VehicleUpdate from "@/models/VehicleUpdate";
 
@@ -33,6 +32,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(vehicleObject);
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

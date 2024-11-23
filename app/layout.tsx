@@ -1,6 +1,5 @@
 import { Provider } from "./provider";
 import HeaderComponent from "../components/Header";
-import FooterComponent from "../components/Footer";
 import "./globals.css";
 
 export default function RootLayout({
@@ -16,7 +15,6 @@ export default function RootLayout({
           <div className="bg-white p-8 bg-opacity-50 rounded-b-lg">
             {children}
           </div>
-          {/* <FooterComponent /> */}
         </body>
       </Provider>
     </html>

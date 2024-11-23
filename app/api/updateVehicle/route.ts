@@ -54,11 +54,7 @@ export async function POST(request: NextRequest) {
     newUpdate.save();
 
     return NextResponse.json({ message: "Updates added successfully" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
-
-// for (const file of files) {
-//   // Example: Upload each file to Supabase Storage
-//   const { data, error } = await supabase.storage
-//     .from("your-bucket-name")
-//     .upload(`path/to/upload/${file.name}`, file);

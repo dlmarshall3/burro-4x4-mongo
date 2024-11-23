@@ -4,11 +4,6 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 
-interface JWTToken {
-  id: string;
-  admin: boolean;
-}
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -34,6 +29,7 @@ export const authOptions: NextAuthOptions = {
         if (!passwordMatch) throw new Error("Wrong Password");
 
         // Ensure that user returned has the correct type
+        /* eslint-disable  @typescript-eslint/no-explicit-any */
         return {
           _id: user._id.toString(), // Ensure _id is returned as string
           email: user.email,

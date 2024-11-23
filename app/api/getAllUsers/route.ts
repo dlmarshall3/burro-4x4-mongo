@@ -8,5 +8,7 @@ export async function GET() {
     const users = await User.find({});
     const nonAdminUsers = users.filter((user) => !user.admin);
     return NextResponse.json(nonAdminUsers);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }

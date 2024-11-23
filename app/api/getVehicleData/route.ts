@@ -1,6 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
 import Vehicle from "../../../models/Vehicle";
-import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -21,6 +20,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(vehicle);
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

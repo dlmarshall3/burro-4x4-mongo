@@ -45,11 +45,13 @@ export default function UpdateVehiclePage({
         if (reqVehicle) {
           setVehicle(reqVehicle);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     fetchVehicleData();
-  }, []);
+  }, [id]);
 
   function handleUpdateChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setVehicleUpdate({ ...vehicleUpdate, update: event.target.value });
@@ -92,7 +94,9 @@ export default function UpdateVehiclePage({
       } else {
         alert("boopo");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
