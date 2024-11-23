@@ -51,7 +51,7 @@ export default function VehiclePage({
         {vehicle?.vehicle.model}
       </h2>
       <Image
-        src={vehicle?.vehicle.imageUrl}
+        src={vehicle!.vehicle.imageUrl}
         alt={"a"}
         width={400}
         height={100}
