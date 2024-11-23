@@ -26,7 +26,7 @@ export default function VehiclePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  const [vehicle, setVehicle] = useState<Vehicle>();
+  const [vehicle, setVehicle] = useState<Vehicle | null>(null);
 
   useEffect(() => {
     async function fetchVehicleData() {
@@ -46,27 +46,32 @@ export default function VehiclePage({
 
   return (
     <div>
-      <h2>
-        {vehicle?.vehicle?.year} {vehicle?.vehicle.make}{" "}
-        {vehicle?.vehicle.model}
-      </h2>
-      <Image
-        src={vehicle!.vehicle.imageUrl}
-        alt={"a"}
-        width={400}
-        height={100}
-      />
-      <div>
-        {vehicle?.vehicleUpdates.map((update) => (
-          <div key={update._id}>
-            <h1>{update.date}</h1>
-            <p>{update.update}</p>
-            {update.imageUrls.map((url) => (
-              <Image src={url} key={url} alt={"b"} height={100} width={200} />
+      {vehicle ? (
+        <>
+          <h2>
+            {vehicle.vehicle.year} {vehicle.vehicle.make} {vehicle.vehicle.model}
+          </h2>
+          <Image
+            src={vehicle.vehicle.imageUrl}
+            alt="Vehicle Image"
+            width={400}
+            height={100}
+          />
+          <div>
+            {vehicle.vehicleUpdates.map((update) => (
+              <div key={update._id}>
+                <h1>{update.date}</h1>
+                <p>{update.update}</p>
+                {update.imageUrls.map((url) => (
+                  <Image src={url} key={url} alt="Update Image" height={100} width={200} />
+                ))}
+              </div>
             ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : (
+        <p>Vehicles loading...</p>
+      )}
     </div>
   );
 }
