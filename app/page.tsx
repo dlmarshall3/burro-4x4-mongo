@@ -11,5 +11,5 @@ export default function Home() {
 
   if (session?.user.admin) redirect("/admin/dashboard");
 
-  redirect("/client/dashboard");
+  if(!session?.user.admin) redirect('/client/dashboard')
 }
