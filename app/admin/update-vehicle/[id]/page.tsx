@@ -119,7 +119,7 @@ export default function UpdateVehiclePage({
           multiple
           onChange={onFileSelection}
         />
-        <button className="bg-green-500 py-2 px-4 rounded-full w-1/4 mb-4">
+        <button className="mb-4 w-3/4 rounded-full bg-green-500 px-4 py-2 sm:w-1/2 lg:w-1/3">
           Update Vehicle
         </button>
       </div>

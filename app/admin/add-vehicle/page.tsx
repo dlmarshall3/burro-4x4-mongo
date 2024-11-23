@@ -119,15 +119,15 @@ export default function AddVehiclePage() {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <div className="p-8 rounded-lg flex flex-col">
-        <h2 className="text-3xl mb-4">Add New Vehicle</h2>
-        <div className="flex flex-col mb-4">
+      <div className="flex flex-col rounded-lg p-8">
+        <h2 className="mb-4 text-3xl">Add New Vehicle</h2>
+        <div className="mb-4 flex flex-col">
           <input
             value={newVehicle.year}
             required
             type="text"
             placeholder="Year"
-            className="mb-2 border border-1 border-gray px-2 w-1/4 rounded-md"
+            className="border-1 border-gray mb-2 w-1/4 rounded-md border px-2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, year: e.target.value })
             }
@@ -137,7 +137,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Make"
-            className="mb-2 border border-1 border-gray px-2 w-1/4 rounded-md"
+            className="border-1 border-gray mb-2 w-1/4 rounded-md border px-2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, make: e.target.value })
             }
@@ -147,7 +147,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Model"
-            className="mb-2 border border-1 border-gray px-2 w-1/4 rounded-md"
+            className="border-1 border-gray mb-2 w-1/4 rounded-md border px-2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, model: e.target.value })
             }
@@ -169,7 +169,7 @@ export default function AddVehiclePage() {
             ref={fileInputRef}
           />
         </div>
-        <button className="bg-green-500 py-2 px-4 rounded-full w-1/4 mb-4">
+        <button className="mb-4 w-3/4 lg:w-1/4 rounded-full bg-green-500 px-4 py-2">
           + New Vehicle
         </button>
         {errorMessage && (
