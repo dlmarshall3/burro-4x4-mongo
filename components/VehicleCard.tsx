@@ -33,12 +33,12 @@ export default function VehicleDashboardCard({
       </div>
       <div className="mb-2">{clientName}</div>
       <Link href={`/vehicle/${_id}`}>
-        <button className="mb-2 w-3/4 rounded-full bg-[#5d8075] p-2 text-white shadow-lg hover:bg-[#79927c] lg:w-full">
+        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black lg:w-full">
           View
         </button>
       </Link>
       <Link href={`/admin/update-vehicle/${_id}`}>
-        <button className="w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-[#0b7774] lg:w-full">
+        <button className="w-3/4 rounded-full bg-[#5d8075] p-2 text-white shadow-lg hover:bg-transparent hover:text-black lg:w-full">
           Update
         </button>
       </Link>
