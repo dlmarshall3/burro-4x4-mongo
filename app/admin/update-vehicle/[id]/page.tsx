@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, use, useEffect, useState } from "react";
+import { ChangeEvent, use, useEffect, useRef, useState } from "react";
 
 interface Vehicle {
   _id: string;
@@ -36,6 +36,9 @@ export default function UpdateVehiclePage({
     update: "",
     files: [],
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     async function fetchVehicleData() {
@@ -90,7 +93,18 @@ export default function UpdateVehiclePage({
       });
 
       if (response.ok) {
-        // success
+        setSuccessMessage("Vehicle updated successfully.");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+        setErrorMessage("");
+        setVehicleUpdate({
+          update: "",
+          files: [],
+        });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       } else {
         alert("boopo");
       }
@@ -112,7 +126,8 @@ export default function UpdateVehiclePage({
           id=""
           placeholder="Update..."
           onChange={handleUpdateChange}
-          className="border-1 border-gray mb-4 w-full sm:w-1/4 rounded-md border p-2"
+          className="border-1 border-gray mb-4 w-3/4 rounded-md border p-2"
+          value={vehicleUpdate.update}
         ></textarea>
         <input
           type="file"
@@ -120,11 +135,16 @@ export default function UpdateVehiclePage({
           multiple
           onChange={onFileSelection}
           className="mb-4"
+          ref={fileInputRef}
         />
         <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black sm:w-1/2 lg:w-1/3">
           Update Vehicle
         </button>
       </div>
+      {errorMessage && <h4 className="text-lg text-red-500">{errorMessage}</h4>}
+      {successMessage && (
+        <h4 className="text-lg text-green-500">{successMessage}</h4>
+      )}
     </form>
   );
 }
