@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export default function VehicleUpdateCard(update: any) {
   return (
     <div className="mb-4 mr-12 flex h-full w-full flex-col rounded-lg border shadow-lg lg:mb-6 lg:w-1/2">
