@@ -50,7 +50,8 @@ export default function VehiclePage({
       {vehicle ? (
         <>
           <h2>
-            {vehicle.vehicle.year} {vehicle.vehicle.make} {vehicle.vehicle.model}
+            {vehicle.vehicle.year} {vehicle.vehicle.make}{" "}
+            {vehicle.vehicle.model}
           </h2>
           <Image
             src={vehicle.vehicle.imageUrl}
@@ -61,17 +62,8 @@ export default function VehiclePage({
           />
           <div>
             {vehicle.vehicleUpdates.map((update) => (
-              <VehicleUpdateCard update={update} key={update._id}/>
+              <VehicleUpdateCard update={update} key={update._id} />
             ))}
-            {/* {vehicle.vehicleUpdates.map((update) => (
-              <div key={update._id}>
-                <h1>{update.date}</h1>
-                <p>{update.update}</p>
-                {update.imageUrls.map((url) => (
-                  <Image src={url} key={url} alt="Update Image" height={100} width={200} />
-                ))}
-              </div>
-            ))} */}
           </div>
         </>
       ) : (

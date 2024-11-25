@@ -112,14 +112,16 @@ export default function UpdateVehiclePage({
           id=""
           placeholder="Update..."
           onChange={handleUpdateChange}
+          className="border-1 border-gray mb-4 w-full sm:w-1/4 rounded-md border p-2"
         ></textarea>
         <input
           type="file"
           accept="image/*"
           multiple
           onChange={onFileSelection}
+          className="mb-4"
         />
-        <button className="mb-4 w-3/4 rounded-full bg-green-500 px-4 py-2 sm:w-1/2 lg:w-1/3">
+        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black sm:w-1/2 lg:w-1/3">
           Update Vehicle
         </button>
       </div>
