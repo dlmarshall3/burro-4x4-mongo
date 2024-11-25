@@ -57,10 +57,11 @@ export default function VehiclePage({
             alt="Vehicle Image"
             width={400}
             height={100}
+            className="mb-4"
           />
           <div>
             {vehicle.vehicleUpdates.map((update) => (
-              <VehicleUpdateCard update={update}/>
+              <VehicleUpdateCard update={update} key={update._id}/>
             ))}
             {/* {vehicle.vehicleUpdates.map((update) => (
               <div key={update._id}>
