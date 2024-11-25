@@ -2,6 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import Image from "next/image";
+import VehicleUpdateCard from "@/components/UpdateCard";
 
 interface Vehicle {
   vehicle: {
@@ -59,6 +60,9 @@ export default function VehiclePage({
           />
           <div>
             {vehicle.vehicleUpdates.map((update) => (
+              <VehicleUpdateCard update={update}/>
+            ))}
+            {/* {vehicle.vehicleUpdates.map((update) => (
               <div key={update._id}>
                 <h1>{update.date}</h1>
                 <p>{update.update}</p>
@@ -66,7 +70,7 @@ export default function VehiclePage({
                   <Image src={url} key={url} alt="Update Image" height={100} width={200} />
                 ))}
               </div>
-            ))}
+            ))} */}
           </div>
         </>
       ) : (

@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <body className="bg-[#dddad4] m-8 rounded-b-lg w-3/4">
+        <body className="bg-[#dddad4] sm:m-8 rounded-b-lg w-full sm:w-3/4">
           <HeaderComponent />
           <div className="bg-white p-8 bg-opacity-50 rounded-b-lg">
             {children}

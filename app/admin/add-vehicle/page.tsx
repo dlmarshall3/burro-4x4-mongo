@@ -119,7 +119,7 @@ export default function AddVehiclePage() {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <div className="flex flex-col rounded-lg p-8">
+      <div className="flex flex-col rounded-lg">
         <h2 className="mb-4 text-3xl">Add New Vehicle</h2>
         <div className="mb-4 flex flex-col">
           <input
@@ -127,7 +127,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Year"
-            className="border-1 border-gray mb-2 w-1/4 rounded-md border px-2"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, year: e.target.value })
             }
@@ -137,7 +137,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Make"
-            className="border-1 border-gray mb-2 w-1/4 rounded-md border px-2"
+            className="border-1 border-gray mb-2 w-full sm:w-1/4 rounded-md border px-2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, make: e.target.value })
             }
@@ -147,12 +147,16 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Model"
-            className="border-1 border-gray mb-2 w-1/4 rounded-md border px-2"
+            className="border-1 border-gray mb-2 w-full sm:w-1/4 rounded-md border px-2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, model: e.target.value })
             }
           />
-          <select onChange={onClientSelection} value={newVehicle.clientId}>
+          <select
+            onChange={onClientSelection}
+            value={newVehicle.clientId}
+            className="border-1 border-gray mb-2 w-full sm:w-1/4 rounded-md border px-2"
+          >
             <option value="">Select Client</option>
             {users &&
               users.map((user) => (
@@ -169,7 +173,7 @@ export default function AddVehiclePage() {
             ref={fileInputRef}
           />
         </div>
-        <button className="mb-4 w-3/4 lg:w-1/4 rounded-full bg-green-500 px-4 py-2">
+        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black sm:w-1/2 lg:w-1/3">
           + New Vehicle
         </button>
         {errorMessage && (
