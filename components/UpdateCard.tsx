@@ -3,7 +3,7 @@ import Image from "next/image";
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export default function VehicleUpdateCard(update: any) {
   return (
-    <div className="mb-4 mr-12 flex h-full w-full flex-col rounded-lg border shadow-lg lg:mb-6 lg:w-1/2">
+    <div className="mb-4 mr-12 flex h-full w-full flex-col rounded-lg border bg-white bg-opacity-30 shadow-lg lg:mb-6 lg:w-1/2">
       <div className="w-full rounded-t-lg bg-white py-2 pl-4">
         <h2>{update.update.date}</h2>
       </div>
