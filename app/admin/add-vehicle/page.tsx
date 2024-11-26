@@ -50,7 +50,7 @@ export default function AddVehiclePage() {
           setUsers(users);
         }
       } catch (error) {
-        console.log(error);
+        setErrorMessage("There was an error fetching the clients. Please try again.");
       }
     }
 
@@ -98,8 +98,7 @@ export default function AddVehiclePage() {
         fileInputRef.current.value = "";
       }
     } else {
-      const error = await response.text();
-      setErrorMessage(error || "An error occurred while adding the vehicle.");
+      setErrorMessage("An error occurred while adding the vehicle.");
     }
     setFormSubmitted(false);
   }

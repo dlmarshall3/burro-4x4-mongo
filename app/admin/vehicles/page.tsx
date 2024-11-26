@@ -15,8 +15,11 @@ interface Vehicle {
   clientName: string;
 }
 
+const ERROR = "Unable to fetch vehicles. Please try again.";
+
 export default function UpdateVehicle() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     async function fetchVehicles() {
@@ -26,10 +29,10 @@ export default function UpdateVehicle() {
           const jsonVehicles = await response.json();
           setVehicles(jsonVehicles);
         } else {
-          console.error("Failed to fetch vehicles");
+          setErrorMessage(ERROR);
         }
       } catch (error) {
-        console.error("Error fetching vehicles:", error);
+        setErrorMessage(ERROR);
       }
     }
 
@@ -38,14 +41,15 @@ export default function UpdateVehicle() {
 
   return (
     <div className="flex flex-col flex-wrap">
-      <h2 className="text-3xl mb-4">Vehicle dashboard</h2>
-      {vehicles.length > 0 ? (
+      <h2 className="mb-4 text-3xl">Vehicle dashboard</h2>
+      {vehicles.length > 0 && !errorMessage ? (
         vehicles.map((vehicle) => (
           <VehicleCard key={vehicle._id} vehicleData={vehicle} />
         ))
       ) : (
-        <Loader/>
+        <Loader />
       )}
+      {errorMessage && <h4 className="text-lg text-red-500">{errorMessage}</h4>}
     </div>
   );
 }

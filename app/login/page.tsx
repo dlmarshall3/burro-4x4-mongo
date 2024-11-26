@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
 import Loader from "@/components/Loader";
 
 export default function Login() {
@@ -21,11 +22,11 @@ export default function Login() {
     });
     if (res?.error) {
       setError(res.error as string);
+      setFormSubmitted(false);
     }
     if (res?.ok) {
       return router.push("/");
     }
-    setFormSubmitted(false);
   };
 
   return (

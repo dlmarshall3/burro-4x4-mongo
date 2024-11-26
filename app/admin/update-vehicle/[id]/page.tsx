@@ -19,6 +19,8 @@ interface VehicleUpdate {
   files: File[] | null;
 }
 
+const ERROR = "There was an error updating the vehicle. Please try again.";
+
 export default function UpdateVehiclePage({
   params,
 }: {
@@ -53,7 +55,9 @@ export default function UpdateVehiclePage({
           setVehicle(reqVehicle);
         }
       } catch (error) {
-        console.log(error);
+        setErrorMessage(
+          "There was an error retrieving the vehicle data. Please try again.",
+        );
       } finally {
         setIsLoading(false);
       }
@@ -113,10 +117,10 @@ export default function UpdateVehiclePage({
           fileInputRef.current.value = "";
         }
       } else {
-        alert("boopo");
+        setErrorMessage(ERROR);
       }
     } catch (error) {
-      console.log(error);
+      setErrorMessage(ERROR);
     }
     setFormSubmitted(false);
   }
