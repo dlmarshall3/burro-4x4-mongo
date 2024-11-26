@@ -2,6 +2,8 @@
 
 import { ChangeEvent, use, useEffect, useRef, useState } from "react";
 
+import Loader from "@/components/Loader";
+
 interface Vehicle {
   _id: string;
   year: string;
@@ -38,6 +40,8 @@ export default function UpdateVehiclePage({
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -50,6 +54,8 @@ export default function UpdateVehiclePage({
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -68,6 +74,7 @@ export default function UpdateVehiclePage({
   }
 
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    setFormSubmitted(true);
     event.preventDefault();
     const { update, files } = vehicleUpdate;
 
@@ -111,40 +118,52 @@ export default function UpdateVehiclePage({
     } catch (error) {
       console.log(error);
     }
+    setFormSubmitted(false);
   }
 
   return (
-    <form onSubmit={onFormSubmit}>
-      <div className="flex flex-col">
-        <h2>
-          {vehicle?.year} {vehicle?.make} {vehicle?.model}
-        </h2>
-        <h2>{vehicle?.clientName}</h2>
+    <>
+      {isLoading && <Loader />}
 
-        <textarea
-          name=""
-          id=""
-          placeholder="Update..."
-          onChange={handleUpdateChange}
-          className="border-1 border-gray mb-4 w-3/4 rounded-md border p-2"
-          value={vehicleUpdate.update}
-        ></textarea>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={onFileSelection}
-          className="mb-4"
-          ref={fileInputRef}
-        />
-        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
-          Update Vehicle
-        </button>
-      </div>
-      {errorMessage && <h4 className="text-lg text-red-500">{errorMessage}</h4>}
-      {successMessage && (
-        <h4 className="text-lg text-green-500">{successMessage}</h4>
+      {!isLoading && (
+        <form onSubmit={onFormSubmit}>
+          <div className="flex flex-col">
+            <h2 className="mb-4 text-2xl underline">
+              {vehicle?.year} {vehicle?.make} {vehicle?.model}
+            </h2>
+            <h3 className="mb-4 text-xl">{vehicle?.clientName}</h3>
+
+            <textarea
+              name=""
+              id=""
+              placeholder="Update..."
+              onChange={handleUpdateChange}
+              className="border-1 border-gray mb-4 w-3/4 rounded-md border p-2"
+              value={vehicleUpdate.update}
+            ></textarea>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={onFileSelection}
+              className="mb-4"
+              ref={fileInputRef}
+            />
+            {!formSubmitted && (
+              <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
+                Update Vehicle
+              </button>
+            )}
+          </div>
+          {errorMessage && !formSubmitted && (
+            <h4 className="text-lg text-red-500">{errorMessage}</h4>
+          )}
+          {successMessage && !formSubmitted && (
+            <h4 className="text-lg text-green-500">{successMessage}</h4>
+          )}
+          {formSubmitted && <Loader />}
+        </form>
       )}
-    </form>
+    </>
   );
 }

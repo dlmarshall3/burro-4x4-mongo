@@ -51,7 +51,7 @@ export default function VehiclePage({
     <div>
       {vehicle ? (
         <>
-          <h2>
+          <h2 className="mb-4 text-2xl underline">
             {vehicle.vehicle.year} {vehicle.vehicle.make}{" "}
             {vehicle.vehicle.model}
           </h2>
@@ -69,7 +69,7 @@ export default function VehiclePage({
           </div>
         </>
       ) : (
-        <Loader/>
+        <Loader />
       )}
     </div>
   );
