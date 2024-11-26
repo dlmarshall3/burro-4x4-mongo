@@ -38,7 +38,7 @@ export default function AddVehiclePage() {
   const [users, setUsers] = useState<User[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function AddVehiclePage() {
   }, []);
 
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
-    setIsLoading(true);
+    setFormSubmitted(true);
     event.preventDefault();
     const { year, make, model, clientId, file, clientName } = newVehicle;
 
@@ -101,7 +101,7 @@ export default function AddVehiclePage() {
       const error = await response.text();
       setErrorMessage(error || "An error occurred while adding the vehicle.");
     }
-    setIsLoading(false);
+    setFormSubmitted(false);
   }
 
   function onFileSelection(e: ChangeEvent<HTMLInputElement>) {
@@ -179,18 +179,18 @@ export default function AddVehiclePage() {
           />
         </div>
 
-        {!isLoading && (
+        {!formSubmitted && (
           <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
             + New Vehicle
           </button>
         )}
-        {errorMessage && !isLoading && (
+        {errorMessage && !formSubmitted && (
           <h4 className="text-lg text-red-500">{errorMessage}</h4>
         )}
-        {successMessage && !isLoading && (
+        {successMessage && !formSubmitted && (
           <h4 className="text-lg text-green-500">{successMessage}</h4>
         )}
-        {isLoading && <Loader />}
+        {formSubmitted && <Loader />}
       </div>
     </form>
   );
