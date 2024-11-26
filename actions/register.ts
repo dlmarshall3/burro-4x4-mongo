@@ -5,26 +5,30 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export const register = async (values: any) => {
-  const { email, password, name } = values;
+  const { email, name } = values;
+  const formattedEmail = email.trim().toLowerCase();
+  const trimmedName = name.trim();
 
   try {
     await connectDB();
-    const userFound = await User.findOne({ email });
+    const userFound = await User.findOne({ formattedEmail });
     if (userFound) {
       return {
         error: "Email already exists!",
       };
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // setting temporary password which they will reset upon login
+    const hashedPassword = await bcrypt.hash("Password123!", 10);
     const user = new User({
-      name,
-      email,
+      name: trimmedName,
+      email: formattedEmail,
       password: hashedPassword,
       admin: false,
+      initialLogin: false,
     });
-    console.log(user);
     await user.save();
   } catch (e) {
-    console.log(e);
+    // determine error handling
   }
 };

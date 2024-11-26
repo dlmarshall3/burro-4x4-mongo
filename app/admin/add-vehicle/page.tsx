@@ -131,7 +131,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Year"
-            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, year: e.target.value })
             }
@@ -141,7 +141,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Make"
-            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, make: e.target.value })
             }
@@ -151,7 +151,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Model"
-            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, model: e.target.value })
             }
@@ -159,7 +159,7 @@ export default function AddVehiclePage() {
           <select
             onChange={onClientSelection}
             value={newVehicle.clientId}
-            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
           >
             <option value="">Select Client</option>
             {users &&

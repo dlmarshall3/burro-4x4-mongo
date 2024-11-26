@@ -38,7 +38,7 @@ export default function Login() {
         <input
           type="email"
           placeholder="Email"
-          className="h-8 w-full rounded border border-solid border-black p-2"
+          className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
           name="email"
         />
       </div>
@@ -48,7 +48,7 @@ export default function Login() {
           <input
             type="password"
             placeholder="Password"
-            className="h-8 w-full rounded border border-solid border-black p-2"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
             name="password"
           />
         </div>

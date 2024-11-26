@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 export interface UserDocument {
   _id: string;
@@ -8,6 +8,7 @@ export interface UserDocument {
   name: string;
   createdAt: Date;
   updatedAt: Date;
+  initialLogin: boolean;
 }
 
 const UserSchema = new Schema<UserDocument>(
@@ -33,10 +34,14 @@ const UserSchema = new Schema<UserDocument>(
       type: Boolean,
       default: false,
     },
+    initialLogin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
