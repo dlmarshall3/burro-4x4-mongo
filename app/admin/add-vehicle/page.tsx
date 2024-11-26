@@ -137,7 +137,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Make"
-            className="border-1 border-gray mb-2 w-full sm:w-1/4 rounded-md border px-2"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, make: e.target.value })
             }
@@ -147,7 +147,7 @@ export default function AddVehiclePage() {
             required
             type="text"
             placeholder="Model"
-            className="border-1 border-gray mb-2 w-full sm:w-1/4 rounded-md border px-2"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
             onChange={(e) =>
               setNewVehicle({ ...newVehicle, model: e.target.value })
             }
@@ -155,7 +155,7 @@ export default function AddVehiclePage() {
           <select
             onChange={onClientSelection}
             value={newVehicle.clientId}
-            className="border-1 border-gray mb-2 w-full sm:w-1/4 rounded-md border px-2"
+            className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/4"
           >
             <option value="">Select Client</option>
             {users &&
@@ -173,7 +173,7 @@ export default function AddVehiclePage() {
             ref={fileInputRef}
           />
         </div>
-        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black sm:w-1/2 lg:w-1/3">
+        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
           + New Vehicle
         </button>
         {errorMessage && (

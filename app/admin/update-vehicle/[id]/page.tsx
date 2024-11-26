@@ -137,7 +137,7 @@ export default function UpdateVehiclePage({
           className="mb-4"
           ref={fileInputRef}
         />
-        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black sm:w-1/2 lg:w-1/3">
+        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
           Update Vehicle
         </button>
       </div>

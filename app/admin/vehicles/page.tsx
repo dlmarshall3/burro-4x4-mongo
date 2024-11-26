@@ -35,7 +35,8 @@ export default function UpdateVehicle() {
   }, []);
 
   return (
-    <div className="flex flex-col flex-wrap lg:flex-row">
+    <div className="flex flex-col flex-wrap">
+      <h2 className="text-3xl mb-4">Vehicle dashboard</h2>
       {vehicles.length > 0 ? (
         vehicles.map((vehicle) => (
           <VehicleCard key={vehicle._id} vehicleData={vehicle} />
