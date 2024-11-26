@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
+import Loader from "../../../components/Loader";
+
 interface VehicleData {
   year: string;
   make: string;
@@ -36,6 +38,7 @@ export default function AddVehiclePage() {
   const [users, setUsers] = useState<User[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -55,6 +58,7 @@ export default function AddVehiclePage() {
   }, []);
 
   async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    setIsLoading(true);
     event.preventDefault();
     const { year, make, model, clientId, file, clientName } = newVehicle;
 
@@ -97,6 +101,7 @@ export default function AddVehiclePage() {
       const error = await response.text();
       setErrorMessage(error || "An error occurred while adding the vehicle.");
     }
+    setIsLoading(false);
   }
 
   function onFileSelection(e: ChangeEvent<HTMLInputElement>) {
@@ -173,15 +178,19 @@ export default function AddVehiclePage() {
             ref={fileInputRef}
           />
         </div>
-        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
-          + New Vehicle
-        </button>
-        {errorMessage && (
+
+        {!isLoading && (
+          <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
+            + New Vehicle
+          </button>
+        )}
+        {errorMessage && !isLoading && (
           <h4 className="text-lg text-red-500">{errorMessage}</h4>
         )}
-        {successMessage && (
+        {successMessage && !isLoading && (
           <h4 className="text-lg text-green-500">{successMessage}</h4>
         )}
+        {isLoading && <Loader />}
       </div>
     </form>
   );

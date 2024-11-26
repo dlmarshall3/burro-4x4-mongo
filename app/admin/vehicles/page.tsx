@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import VehicleCard from "../../../components/VehicleCard";
+import Loader from "@/components/Loader";
 
 interface Vehicle {
   _id: string;
@@ -42,7 +44,7 @@ export default function UpdateVehicle() {
           <VehicleCard key={vehicle._id} vehicleData={vehicle} />
         ))
       ) : (
-        <p>Loading vehicles...</p>
+        <Loader/>
       )}
     </div>
   );

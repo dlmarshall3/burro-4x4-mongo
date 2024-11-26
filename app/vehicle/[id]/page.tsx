@@ -2,7 +2,9 @@
 
 import { use, useEffect, useState } from "react";
 import Image from "next/image";
+
 import VehicleUpdateCard from "@/components/UpdateCard";
+import Loader from "@/components/Loader";
 
 interface Vehicle {
   vehicle: {
@@ -67,7 +69,7 @@ export default function VehiclePage({
           </div>
         </>
       ) : (
-        <p>Vehicles loading...</p>
+        <Loader/>
       )}
     </div>
   );

@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const [loading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -28,5 +28,5 @@ export default function Home() {
     setIsLoading(false);
   }, [status, session]);
 
-  return <>{loading && <Loader />}</>;
+  return <>{isLoading && <Loader />}</>;
 }
