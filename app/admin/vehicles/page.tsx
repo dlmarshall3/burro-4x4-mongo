@@ -32,6 +32,7 @@ export default function UpdateVehicle() {
           setErrorMessage(ERROR);
         }
       } catch (error) {
+        console.error(error);
         setErrorMessage(ERROR);
       }
     }

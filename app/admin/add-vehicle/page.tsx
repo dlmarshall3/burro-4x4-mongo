@@ -50,6 +50,7 @@ export default function AddVehiclePage() {
           setUsers(users);
         }
       } catch (error) {
+        console.error(error);
         setErrorMessage("There was an error fetching the clients. Please try again.");
       }
     }

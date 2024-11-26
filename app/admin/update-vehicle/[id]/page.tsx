@@ -55,6 +55,7 @@ export default function UpdateVehiclePage({
           setVehicle(reqVehicle);
         }
       } catch (error) {
+        console.error(error);
         setErrorMessage(
           "There was an error retrieving the vehicle data. Please try again.",
         );
@@ -120,6 +121,7 @@ export default function UpdateVehiclePage({
         setErrorMessage(ERROR);
       }
     } catch (error) {
+      console.error(error);
       setErrorMessage(ERROR);
     }
     setFormSubmitted(false);
