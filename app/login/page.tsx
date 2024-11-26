@@ -3,13 +3,15 @@
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import Loader from "@/components/Loader";
 
 export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    setFormSubmitted(true);
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await signIn("credentials", {
@@ -23,44 +25,40 @@ export default function Login() {
     if (res?.ok) {
       return router.push("/");
     }
+    setFormSubmitted(false);
   };
 
   return (
-    <section className="w-full h-screen flex items-center justify-center">
-      <form
-        className="p-6 w-full max-w-[400px] flex flex-col justify-between items-center gap-2 
-        border border-solid border-black bg-white rounded"
-        onSubmit={handleSubmit}
-      >
-        {error && <div className="text-black">{error}</div>}
-        <h1 className="mb-5 w-full text-2xl font-bold">Sign In</h1>
+    <form className="flex w-3/4 max-w-[400px] flex-col" onSubmit={handleSubmit}>
+      {error && <div className="text-black">{error}</div>}
+      <h1 className="mb-4 w-full text-2xl font-bold">Sign In</h1>
+      <div className="mb-4">
         <label className="w-full text-sm">Email</label>
         <input
           type="email"
           placeholder="Email"
-          className="w-full h-8 border border-solid border-black rounded p-2"
+          className="h-8 w-full rounded border border-solid border-black p-2"
           name="email"
         />
+      </div>
+      <div className="mb-4">
         <label className="w-full text-sm">Password</label>
         <div className="flex w-full">
           <input
             type="password"
             placeholder="Password"
-            className="w-full h-8 border border-solid border-black rounded p-2"
+            className="h-8 w-full rounded border border-solid border-black p-2"
             name="password"
           />
         </div>
-        <button className="w-full border border-solid border-black rounded">
+      </div>
+
+      {!formSubmitted && (
+        <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
           Sign In
         </button>
-
-        <Link
-          href="/register"
-          className="text-sm text-[#888] transition duration-150 ease hover:text-black"
-        >
-          Register for an account
-        </Link>
-      </form>
-    </section>
+      )}
+      {formSubmitted && <Loader />}
+    </form>
   );
 }
