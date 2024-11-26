@@ -1,15 +1,32 @@
 "use client";
+
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import Loader from "../components/Loader";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const [loading, setIsLoading] = useState(true);
 
-  if (status === "unauthenticated") {
-    redirect("/login");
-  }
+  useEffect(() => {
+    if (status === "loading") return;
 
-  if (session?.user.admin === true) redirect("/admin/dashboard");
+    if (status === "unauthenticated") {
+      redirect("/login");
+    }
 
-  if(session?.user.admin === false) redirect('/client/dashboard')
+    if (session?.user.admin === true) {
+      redirect("/admin/dashboard");
+    }
+
+    if (session?.user.admin === false) {
+      redirect("/client/dashboard");
+    }
+
+    setIsLoading(false);
+  }, [status, session]);
+
+  return <>{loading && <Loader />}</>;
 }
