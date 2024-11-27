@@ -36,7 +36,7 @@ const UserSchema = new Schema<UserDocument>(
     },
     initialLogin: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   {

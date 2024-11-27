@@ -20,8 +20,8 @@ export default function Home() {
         redirect("/admin/dashboard");
       }
 
-      if (session?.user.initialLogin === false) {
-        redirect("/client/set-password");
+      if (session?.user.initialLogin === true) {
+        redirect("/client/change-password");
       }
 
       redirect("/client/dashboard");

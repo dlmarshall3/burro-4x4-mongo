@@ -7,7 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 
 export default function Login() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const isAdmin = session?.user.admin;
   const [error, setError] = useState("");
   const router = useRouter();
