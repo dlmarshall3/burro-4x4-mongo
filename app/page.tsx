@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import Loader from "../components/Loader";
 
