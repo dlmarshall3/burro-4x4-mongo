@@ -11,10 +11,12 @@ interface VehicleDashboardCardProps {
     clientId: string;
     clientName: string;
   };
+  isAdmin: boolean;
 }
 
 export default function VehicleDashboardCard({
   vehicleData,
+  isAdmin,
 }: VehicleDashboardCardProps) {
   const { imageUrl, year, make, model, clientName, _id } = vehicleData;
   return (
@@ -37,11 +39,13 @@ export default function VehicleDashboardCard({
           View
         </button>
       </Link>
-      <Link href={`/admin/update-vehicle/${_id}`}>
-        <button className="w-3/4 rounded-full bg-[#5d8075] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#5d8075] lg:w-full">
-          Update
-        </button>
-      </Link>
+      {isAdmin && (
+        <Link href={`/admin/update-vehicle/${_id}`}>
+          <button className="w-3/4 rounded-full bg-[#5d8075] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#5d8075] lg:w-full">
+            Update
+          </button>
+        </Link>
+      )}
     </div>
   );
 }
