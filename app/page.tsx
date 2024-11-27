@@ -10,21 +10,21 @@ export default function Home() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (status === "loading") return;
-
     if (status === "unauthenticated") {
       redirect("/login");
     }
 
-    if (session?.user.admin === true) {
-      redirect("/admin/dashboard");
-    }
+    if(status === 'authenticated'){
+      if (session?.user.admin === true) {
+        redirect("/admin/dashboard");
+      }
 
-    if (session?.user.initialLogin === false) {
-      // redirect to new password screen
-    }
+      if (session?.user.initialLogin === false) {
+        // redirect to new password screen
+      }
 
-    redirect("/client/dashboard");
+      redirect("/client/dashboard");
+    }
   }, [status, session]);
 
   return <Loader />;
