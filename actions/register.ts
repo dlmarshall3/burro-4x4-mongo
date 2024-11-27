@@ -25,7 +25,7 @@ export const register = async (values: any) => {
       email: formattedEmail,
       password: hashedPassword,
       admin: false,
-      initialLogin: false,
+      initialLogin: true,
     });
     await user.save();
   } catch (e) {
