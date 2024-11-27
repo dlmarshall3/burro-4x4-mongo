@@ -34,10 +34,15 @@ export default function AdminDashboard() {
             </button>
           </Link>
           <Link href="/admin/register">
-            <button className="w-3/4 rounded-full bg-[#749d2d] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#749d2d] sm:w-1/2 lg:w-1/3">
+            <button className="mb-4 w-3/4 rounded-full bg-[#749d2d] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#749d2d] sm:w-1/2 lg:w-1/3">
               Add client
             </button>
           </Link>
+          {/* <Link href="/admin/register">
+            <button className="w-3/4 rounded-full bg-[#78909c] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#78909c] sm:w-1/2 lg:w-1/3">
+              Reset client password
+            </button>
+          </Link> */}
         </div>
       )}
     </>
