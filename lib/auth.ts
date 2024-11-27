@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
 
         const passwordMatch = await bcrypt.compare(
           credentials!.password,
-          user.password
+          user.password,
         );
 
         if (!passwordMatch) throw new Error("Wrong Password");
@@ -35,6 +35,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           name: user.name,
           admin: user.admin,
+          initialLogin: user.initialLogin,
         } as any; // Type assertion to bypass type checking temporarily
       },
     }),
@@ -47,7 +48,8 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user._id; // Attach _id to JWT token
-        token.admin = user.admin; // Attach admin status to JWT token
+        token.admin = user.admin;
+        token.initialLogin = user.initialLogin; // Attach admin status to JWT token
       }
       return token;
     },
@@ -55,7 +57,8 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string; // Ensure id is a string
-        session.user.admin = token.admin as boolean; // Ensure admin is a boolean
+        session.user.admin = token.admin as boolean;
+        session.user.initialLogin = token.initialLogin as boolean; // Ensure admin is a boolean
       }
       return session;
     },

@@ -52,7 +52,7 @@ export default function VehiclePage({
       {vehicle ? (
         <>
           <h2 className="mb-4 text-2xl underline">
-            {vehicle.vehicle.year} {vehicle.vehicle.make}{" "}
+            {vehicle.vehicle.year} {vehicle.vehicle.make}
             {vehicle.vehicle.model}
           </h2>
           <Image

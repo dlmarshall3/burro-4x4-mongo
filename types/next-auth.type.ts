@@ -6,6 +6,7 @@ declare module "next-auth" {
     user: {
       id: string;
       admin: boolean;
+      initialLogin: boolean;
       email: string;
       name: string;
     };

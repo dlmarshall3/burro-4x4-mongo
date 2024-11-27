@@ -8,7 +8,6 @@ import Loader from "../components/Loader";
 
 export default function Home() {
   const { data: session, status } = useSession();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -21,12 +20,12 @@ export default function Home() {
       redirect("/admin/dashboard");
     }
 
-    if (session?.user.admin === false) {
-      redirect("/client/dashboard");
+    if (session?.user.initialLogin === false) {
+      // redirect to new password screen
     }
 
-    setIsLoading(false);
+    redirect("/client/dashboard");
   }, [status, session]);
 
-  return <>{isLoading && <Loader />}</>;
+  return <Loader />;
 }

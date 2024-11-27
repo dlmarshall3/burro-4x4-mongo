@@ -33,7 +33,7 @@ export default function Login() {
     <form className="flex w-3/4 max-w-[400px] flex-col" onSubmit={handleSubmit}>
       {error && <div className="text-black">{error}</div>}
       <h1 className="mb-4 w-full text-2xl font-bold">Sign In</h1>
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col">
         <label className="w-full text-sm">Email</label>
         <input
           type="email"
@@ -42,7 +42,7 @@ export default function Login() {
           name="email"
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 flex-col">
         <label className="w-full text-sm">Password</label>
         <div className="flex w-full">
           <input

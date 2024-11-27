@@ -1,6 +1,8 @@
 "use client";
 
 import { ChangeEvent, use, useEffect, useRef, useState } from "react";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 import Loader from "@/components/Loader";
 
@@ -26,6 +28,8 @@ export default function UpdateVehiclePage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const { data: session, status } = useSession();
+  const isAdmin = session?.user.admin;
   const { id } = use(params);
   const [vehicle, setVehicle] = useState<Vehicle>({
     _id: "",
@@ -45,6 +49,16 @@ export default function UpdateVehiclePage({
   const [isLoading, setIsLoading] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      redirect("/login");
+    }
+
+    if (!isAdmin) {
+      redirect("../../client/dashboard");
+    }
+  }, [isAdmin, status]);
 
   useEffect(() => {
     async function fetchVehicleData() {
@@ -129,46 +143,50 @@ export default function UpdateVehiclePage({
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isAdmin && (
+        <>
+          {isLoading && <Loader />}
 
-      {!isLoading && (
-        <form onSubmit={onFormSubmit}>
-          <div className="flex flex-col">
-            <h2 className="mb-4 text-2xl underline">
-              {vehicle?.year} {vehicle?.make} {vehicle?.model}
-            </h2>
-            <h3 className="mb-4 text-xl">{vehicle?.clientName}</h3>
+          {!isLoading && (
+            <form onSubmit={onFormSubmit}>
+              <div className="flex flex-col">
+                <h2 className="mb-4 text-2xl underline">
+                  {vehicle?.year} {vehicle?.make} {vehicle?.model}
+                </h2>
+                <h3 className="mb-4 text-xl">{vehicle?.clientName}</h3>
 
-            <textarea
-              name=""
-              id=""
-              placeholder="Update..."
-              onChange={handleUpdateChange}
-              className="border-1 border-gray mb-4 w-3/4 rounded-md border p-2"
-              value={vehicleUpdate.update}
-            ></textarea>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={onFileSelection}
-              className="mb-4"
-              ref={fileInputRef}
-            />
-            {!formSubmitted && (
-              <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
-                Update Vehicle
-              </button>
-            )}
-          </div>
-          {errorMessage && !formSubmitted && (
-            <h4 className="text-lg text-red-500">{errorMessage}</h4>
+                <textarea
+                  name=""
+                  id=""
+                  placeholder="Update..."
+                  onChange={handleUpdateChange}
+                  className="border-1 border-gray mb-4 w-3/4 rounded-md border p-2"
+                  value={vehicleUpdate.update}
+                ></textarea>
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={onFileSelection}
+                  className="mb-4"
+                  ref={fileInputRef}
+                />
+                {!formSubmitted && (
+                  <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
+                    Update Vehicle
+                  </button>
+                )}
+              </div>
+              {errorMessage && !formSubmitted && (
+                <h4 className="text-lg text-red-500">{errorMessage}</h4>
+              )}
+              {successMessage && !formSubmitted && (
+                <h4 className="text-lg text-green-500">{successMessage}</h4>
+              )}
+              {formSubmitted && <Loader />}
+            </form>
           )}
-          {successMessage && !formSubmitted && (
-            <h4 className="text-lg text-green-500">{successMessage}</h4>
-          )}
-          {formSubmitted && <Loader />}
-        </form>
+        </>
       )}
     </>
   );
