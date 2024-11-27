@@ -8,19 +8,20 @@ import Loader from "../components/Loader";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const isAdmin = session?.user.admin;
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (status === "unauthenticated" || session === null) {
       redirect("/login");
     }
 
-    if(status === 'authenticated'){
-      if (session?.user.admin === true) {
+    if (status === "authenticated") {
+      if (isAdmin) {
         redirect("/admin/dashboard");
       }
 
       if (session?.user.initialLogin === false) {
-        // redirect to new password screen
+        redirect("/client/set-password");
       }
 
       redirect("/client/dashboard");
