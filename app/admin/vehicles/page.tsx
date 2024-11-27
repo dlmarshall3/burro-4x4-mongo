@@ -19,7 +19,7 @@ interface Vehicle {
 const ERROR = "Unable to fetch vehicles. Please try again.";
 
 export default function UpdateVehicle() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const isAdmin = session?.user.admin;
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
