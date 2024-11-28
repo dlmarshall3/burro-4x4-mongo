@@ -30,6 +30,7 @@ export default function VehiclePage({
 }) {
   const { id } = use(params);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
+  const [vehicleName, setVehicleName] = useState("");
 
   useEffect(() => {
     async function fetchVehicleData() {
@@ -38,6 +39,8 @@ export default function VehiclePage({
         const reqVehicle = await response.json();
         if (reqVehicle) {
           setVehicle(reqVehicle);
+          const { year, make, model } = reqVehicle.vehicle;
+          setVehicleName(year + " " + make + " " + model);
         }
       } catch (error) {
         console.log(error);
@@ -51,10 +54,7 @@ export default function VehiclePage({
     <div>
       {vehicle ? (
         <>
-          <h2 className="mb-4 text-2xl underline">
-            {vehicle.vehicle.year} {vehicle.vehicle.make}
-            {vehicle.vehicle.model}
-          </h2>
+          <h2 className="mb-4 text-2xl underline">{vehicleName}</h2>
           <Image
             src={vehicle.vehicle.imageUrl}
             alt="Vehicle Image"
