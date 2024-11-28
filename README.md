@@ -20,7 +20,7 @@ Video coming soon
 At first, I started with Angular for the frontend, but decided to switch to Next.js due a) needing an API and b) how easy it is to deploy to Vercel. The authentication is handled by way of Next Auth and MongoDB, along with document and data storage. However, due to budget constraints and MongoDB's file storage limitations, all images are currently hosted in Supabase. Once we move past the MVP stage, this will be handled entirely with MongoDB.
 
 ### NOTES:
-With how quickly I put this together, along with not trying to add more features than immediately necessary, there are a handful of things I plan on adding/changing in the near future. They are, but not limited to:
+With how quickly I put this together, along with not trying to add more features than immediately necessary (especially without client feedback), there are a handful of things I plan on adding/changing in the near future. They are, but not limited to:
 
 - Refactoring syntax across the codebase to be consistent (function vs const, how data is sent to the API, etc.)
 - Consolidating the session checks into a middleware
