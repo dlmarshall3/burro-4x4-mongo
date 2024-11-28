@@ -23,6 +23,7 @@ At first, I started with Angular for the frontend, but decided to switch to Next
 With how quickly I put this together, along with not trying to add more features than immediately necessary, there are a handful of things I plan on adding/changing in the near future. They are, but not limited to:
 
 - Refactoring syntax across the codebase to be consistent (function vs const, how data is sent to the API, etc.)
+- Consolidating the session checks into a middleware
 - Adding real-time error logging
 - Including the ability to archive clients and vehicles
 - Allowing updates to be edited or deleted
