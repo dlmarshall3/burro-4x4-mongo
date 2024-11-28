@@ -24,6 +24,7 @@ With how quickly I put this together, along with not trying to add more features
 
 - Refactoring syntax across the codebase to be consistent (function vs const, how data is sent to the API, etc.)
 - Consolidating the session checks into a middleware
+- 100% code coverage with unit tests
 - Adding real-time error logging
 - Including the ability to archive clients and vehicles
 - Allowing updates to be edited or deleted
