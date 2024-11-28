@@ -72,9 +72,9 @@ export default function SetPasswordPage() {
         className="flex w-3/4 max-w-[400px] flex-col"
       >
         <div className="mb-4">
-          <h1 className="text-2xl">Set new password</h1>
-          <p>Your new password must have:</p>
-          <ul>
+          <h1 className="text-2xl mb-4">Set new password</h1>
+          <p className="mb-4">Your new password must have:</p>
+          <ul className="list-disc list-inside">
             <li>Minimum of 8 characters</li>
             <li>At least one lowercase and uppercase letter</li>
             <li>At least one number</li>
