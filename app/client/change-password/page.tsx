@@ -1,5 +1,3 @@
-//
-
 "use client";
 
 import Loader from "@/components/Loader";
@@ -14,8 +12,8 @@ export default function SetPasswordPage() {
   const { data: session } = useSession();
   const clientId = session?.user.id;
   const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const [passwordIsValid, setPasswordValidity] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -72,9 +70,9 @@ export default function SetPasswordPage() {
         className="flex w-3/4 max-w-[400px] flex-col"
       >
         <div className="mb-4">
-          <h1 className="text-2xl mb-4">Set new password</h1>
+          <h1 className="mb-4 text-2xl">Set new password</h1>
           <p className="mb-4">Your new password must have:</p>
-          <ul className="list-disc list-inside">
+          <ul className="list-inside list-disc">
             <li>Minimum of 8 characters</li>
             <li>At least one lowercase and uppercase letter</li>
             <li>At least one number</li>

@@ -5,16 +5,26 @@ import { redirect } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 import Loader from "../../../components/Loader";
-import {
-  IAddVehicleUser as IAddVehicleUsers,
-  IAddVehicleVehicleData,
-} from "./IAddVehicle";
+
+type VehicleData = {
+  year: string;
+  make: string;
+  model: string;
+  clientId: string;
+  clientName: string;
+  file: File | null;
+};
+
+type Users = {
+  _id: string;
+  name: string;
+};
 
 export default function AddVehiclePage() {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.admin;
 
-  const [newVehicle, setNewVehicle] = useState<IAddVehicleVehicleData>({
+  const [newVehicle, setNewVehicle] = useState<VehicleData>({
     year: "",
     make: "",
     model: "",
@@ -22,7 +32,7 @@ export default function AddVehiclePage() {
     clientName: "",
     file: null,
   });
-  const [users, setUsers] = useState<[IAddVehicleUsers]>([
+  const [users, setUsers] = useState<[Users]>([
     {
       _id: "",
       name: "",

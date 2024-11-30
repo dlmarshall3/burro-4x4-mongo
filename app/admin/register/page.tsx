@@ -5,18 +5,22 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 import Loader from "@/components/Loader";
-import { IRegister } from "./IRegister";
+
+type User = {
+  name: string;
+  email: string;
+};
 
 export default function Register() {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.admin;
 
-  const [user, setUser] = useState<IRegister>({
+  const [user, setUser] = useState<User>({
     name: "",
     email: "",
   });
-  const [errorMessage, setErrorMessage] = useState<string>();
-  const [successMessage, setSuccessMessage] = useState<string>();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   useEffect(() => {
@@ -30,8 +34,9 @@ export default function Register() {
   }, [isAdmin, status]);
 
   async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
-    setFormSubmitted(true);
     event.preventDefault();
+    setFormSubmitted(true);
+  
     const { name, email } = user;
 
     if (!name || !email) {

@@ -6,7 +6,7 @@ import Image from "next/image";
 import VehicleUpdateCard from "@/components/UpdateCard";
 import Loader from "@/components/Loader";
 
-interface Vehicle {
+type Vehicle = {
   vehicle: {
     year: string;
     make: string;
@@ -16,7 +16,7 @@ interface Vehicle {
   vehicleUpdates: [VehicleUpdate];
 }
 
-interface VehicleUpdate {
+type VehicleUpdate = {
   _id: string;
   update: string;
   date: string;

@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-interface Vehicle {
+type Vehicle = {
   _id: string;
   year: string;
   make: string;

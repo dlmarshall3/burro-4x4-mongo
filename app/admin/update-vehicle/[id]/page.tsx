@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 
 import Loader from "@/components/Loader";
 
-interface Vehicle {
+type Vehicle = {
   _id: string;
   year: string;
   make: string;
@@ -14,12 +14,12 @@ interface Vehicle {
   imageUrl: string;
   clientName: string;
   clientId: string;
-}
+};
 
-interface VehicleUpdate {
+type VehicleUpdate = {
   update: string;
   files: File[] | null;
-}
+};
 
 const ERROR = "There was an error updating the vehicle. Please try again.";
 
@@ -44,8 +44,8 @@ export default function UpdateVehiclePage({
     update: "",
     files: [],
   });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);

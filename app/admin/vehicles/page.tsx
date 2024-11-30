@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import VehicleCard from "../../../components/VehicleCard";
 import Loader from "@/components/Loader";
 
-interface Vehicle {
+type Vehicle = {
   _id: string;
   year: string;
   make: string;
@@ -22,7 +22,7 @@ export default function UpdateVehicle() {
   const { data: session } = useSession();
   const isAdmin = session?.user.admin;
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     async function fetchVehicles() {
