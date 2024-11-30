@@ -2,29 +2,19 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 import Loader from "../../../components/Loader";
-
-interface VehicleData {
-  year: string;
-  make: string;
-  model: string;
-  clientId: string;
-  clientName: string;
-  file: File | null;
-}
-
-interface User {
-  _id: string;
-  name: string;
-}
+import {
+  IAddVehicleUser as IAddVehicleUsers,
+  IAddVehicleVehicleData,
+} from "./IAddVehicle";
 
 export default function AddVehiclePage() {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.admin;
 
-  const [newVehicle, setNewVehicle] = useState<VehicleData>({
+  const [newVehicle, setNewVehicle] = useState<IAddVehicleVehicleData>({
     year: "",
     make: "",
     model: "",
@@ -32,7 +22,12 @@ export default function AddVehiclePage() {
     clientName: "",
     file: null,
   });
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<[IAddVehicleUsers]>([
+    {
+      _id: "",
+      name: "",
+    },
+  ]);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -55,19 +50,24 @@ export default function AddVehiclePage() {
         if (response.ok) {
           const users = await response.json();
           setUsers(users);
+        } else {
+          throw new Error(
+            "There was an error fetching the clients. Please try again.",
+          );
         }
-      } catch (error) {
-        console.error(error);
-        setErrorMessage(
-          "There was an error fetching the clients. Please try again.",
-        );
+      } catch (error: unknown) {
+        const errorMsg =
+          error instanceof Error
+            ? error.message
+            : "There was an unknown error. Please try again.";
+        setErrorMessage(errorMsg);
       }
     }
 
     getNonAdminUsers();
   }, []);
 
-  async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
     setFormSubmitted(true);
     event.preventDefault();
     const { year, make, model, clientId, file, clientName } = newVehicle;
@@ -85,32 +85,43 @@ export default function AddVehiclePage() {
     formData.append("clientName", clientName);
     formData.append("file", file);
 
-    const response = await fetch("/api/addVehicle", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      setSuccessMessage("Vehicle added successfully!");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
-      setErrorMessage("");
-      setNewVehicle({
-        year: "",
-        make: "",
-        model: "",
-        clientId: "",
-        clientName: "",
-        file: null,
+    try {
+      const response = await fetch("/api/addVehicle", {
+        method: "POST",
+        body: formData,
       });
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
+
+      if (response.ok) {
+        setSuccessMessage("Vehicle added successfully!");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+        setErrorMessage("");
+        setNewVehicle({
+          year: "",
+          make: "",
+          model: "",
+          clientId: "",
+          clientName: "",
+          file: null,
+        });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      } else {
+        throw new Error(
+          "There was an error creating the vehicle. Please try again.",
+        );
       }
-    } else {
-      setErrorMessage("An error occurred while adding the vehicle.");
+    } catch (error: unknown) {
+      const errorMsg =
+        error instanceof Error
+          ? error.message
+          : "There was an unknown error. Please try again.";
+      setErrorMessage(errorMsg);
+    } finally {
+      setFormSubmitted(false);
     }
-    setFormSubmitted(false);
   }
 
   function onFileSelection(e: ChangeEvent<HTMLInputElement>) {

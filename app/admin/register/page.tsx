@@ -1,20 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-
-import { register } from "@/actions/register";
-import Loader from "@/components/Loader";
 import { redirect } from "next/navigation";
+
+import Loader from "@/components/Loader";
+import { IRegister } from "./IRegister";
 
 export default function Register() {
   const { data: session, status } = useSession();
   const isAdmin = session?.user.admin;
 
+  const [user, setUser] = useState<IRegister>({
+    name: "",
+    email: "",
+  });
   const [errorMessage, setErrorMessage] = useState<string>();
   const [successMessage, setSuccessMessage] = useState<string>();
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const ref = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -26,37 +29,56 @@ export default function Register() {
     }
   }, [isAdmin, status]);
 
-  const handleSubmit = async (formData: FormData) => {
+  async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
     setFormSubmitted(true);
-    const user = await register({
-      email: formData.get("email"),
-      name: formData.get("name"),
-    });
-    ref.current?.reset();
-    if (user?.error) {
-      setErrorMessage(
-        "There was an error creating the client. Please try again.",
-      );
+    event.preventDefault();
+    const { name, email } = user;
+
+    if (!name || !email) {
+      setErrorMessage("Please fill out all fields.");
       return;
-    } else {
-      setSuccessMessage("Client created successfully!");
-      setTimeout(() => {
-        setSuccessMessage("");
-        setErrorMessage("");
-      }, 3000);
     }
-    setFormSubmitted(false);
-  };
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+
+    try {
+      const response = await fetch("/api/createClient", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        setErrorMessage("");
+        setSuccessMessage("Client added successfully!");
+        setTimeout(() => {
+          setSuccessMessage("");
+          setUser({ name: "", email: "" });
+        }, 3000);
+      } else {
+        throw new Error(
+          "There was an error creating the client. Please try again.",
+        );
+      }
+    } catch (error: unknown) {
+      const errorMsg =
+        error instanceof Error
+          ? error.message
+          : "There was an unknown error. Please try again.";
+      setErrorMessage(errorMsg);
+    } finally {
+      setFormSubmitted(false);
+    }
+  }
 
   return (
     <>
       {isAdmin && (
         <form
-          ref={ref}
-          action={handleSubmit}
+          onSubmit={onFormSubmit}
           className="flex w-3/4 max-w-[400px] flex-col"
         >
-          {errorMessage && <div className="">{errorMessage}</div>}
           <h1 className="mb-4 w-full text-2xl font-bold">Register</h1>
           <div className="mb-4 flex flex-col">
             <label className="w-full text-sm">Full Name</label>
@@ -65,6 +87,8 @@ export default function Register() {
               placeholder="Full Name"
               className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
               name="name"
+              value={user.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
           </div>
           <div className="mb-4 flex flex-col">
@@ -74,6 +98,8 @@ export default function Register() {
               placeholder="Email"
               className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
               name="email"
+              value={user.email}
+              onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
           </div>
           {!formSubmitted && (
