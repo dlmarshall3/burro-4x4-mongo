@@ -14,9 +14,7 @@ type Vehicle = {
   imageUrl: string;
   clientId: string;
   clientName: string;
-}
-
-const ERROR = "Unable to fetch vehicles. Please try again.";
+};
 
 export default function UpdateVehicle() {
   const { data: session } = useSession();
@@ -32,11 +30,14 @@ export default function UpdateVehicle() {
           const jsonVehicles = await response.json();
           setVehicles(jsonVehicles);
         } else {
-          setErrorMessage(ERROR);
+          throw new Error("Unable to fetch vehicles. Please try again.");
         }
-      } catch (error) {
-        console.error(error);
-        setErrorMessage(ERROR);
+      } catch (error: unknown) {
+        const errorMsg =
+          error instanceof Error
+            ? error.message
+            : "There was an unknown error. Please try again.";
+        setErrorMessage(errorMsg);
       }
     }
 

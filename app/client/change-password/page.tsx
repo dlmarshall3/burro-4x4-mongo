@@ -3,7 +3,7 @@
 import Loader from "@/components/Loader";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
@@ -16,11 +16,22 @@ export default function SetPasswordPage() {
   const [confirmedPassword, setConfirmedPassword] = useState<string>("");
   const [passwordIsValid, setPasswordValidity] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   function onPasswordChange(passwordString: string) {
-    setPassword(passwordString);
     const validPassword = PASSWORD_REGEX.test(passwordString);
-    setPasswordValidity(validPassword);
+    if (validPassword) {
+      setPassword(passwordString);
+    }
+  }
+
+  function onConfirmedPasswordChange(passwordString: string) {
+    console.log(passwordString);
+    const validPassword = PASSWORD_REGEX.test(passwordString);
+    if (validPassword && password === passwordString) {
+      setConfirmedPassword(passwordString);
+      setPasswordValidity(true);
+    }
   }
 
   function generateConfirmedPasswordValidationMessage() {
@@ -35,11 +46,11 @@ export default function SetPasswordPage() {
       return "Passwords do not match.";
   }
 
-  async function handleSubmit() {
-    event?.preventDefault();
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     setFormSubmitted(true);
 
-    if (!password) {
+    if (!passwordIsValid) {
       return;
     }
 
@@ -56,10 +67,18 @@ export default function SetPasswordPage() {
       if (response.ok) {
         router.push("/client/dashboard");
       } else {
-        // error handling
+        throw new Error(
+          "There was an error resetting the password. Please try again.",
+        );
       }
     } catch (error) {
-      console.error(error);
+      const errorMsg =
+        error instanceof Error
+          ? error.message
+          : "There was an unknown error. Please try again.";
+      setErrorMessage(errorMsg);
+    } finally {
+      setFormSubmitted(false);
     }
   }
 
@@ -89,10 +108,10 @@ export default function SetPasswordPage() {
             className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
             name="password"
           />
-          <span className={passwordIsValid ? "text-green-700" : "text-red-500"}>
+          <span className={password ? "text-green-700" : "text-red-500"}>
             {password.length === 0
               ? ""
-              : passwordIsValid
+              : password
                 ? "Valid password."
                 : "Invalid password."}
           </span>
@@ -101,11 +120,11 @@ export default function SetPasswordPage() {
           <label className="w-full text-sm">Confirm password</label>
 
           <input
-            onChange={(e) => setConfirmedPassword(e.target.value)}
+            onChange={(e) => onConfirmedPasswordChange(e.target.value)}
             type="password"
             placeholder="Confirm password"
             className="border-1 border-gray mb-2 w-full rounded-md border px-2 sm:w-1/2"
-            name="password"
+            name="confirmedPassword"
           />
           <span
             className={
@@ -116,11 +135,17 @@ export default function SetPasswordPage() {
           </span>
         </div>
         {!formSubmitted && (
-          <button className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3">
+          <button
+            disabled={!passwordIsValid}
+            className="mb-2 w-3/4 rounded-full bg-[#006b78] p-2 text-white shadow-lg hover:bg-transparent hover:text-black hover:outline hover:outline-[#006b78] sm:w-1/2 lg:w-1/3"
+          >
             Set password
           </button>
         )}
         {formSubmitted && <Loader />}
+        {errorMessage && !formSubmitted && (
+          <h4 className="text-lg text-red-500">{errorMessage}</h4>
+        )}
       </form>
     </>
   );

@@ -67,12 +67,15 @@ export default function UpdateVehiclePage({
         const reqVehicle = await response.json();
         if (reqVehicle) {
           setVehicle(reqVehicle);
+        } else {
+          throw new Error("Error fetching vehicle data. Please try again.");
         }
-      } catch (error) {
-        console.error(error);
-        setErrorMessage(
-          "There was an error retrieving the vehicle data. Please try again.",
-        );
+      } catch (error: unknown) {
+        const errorMsg =
+          error instanceof Error
+            ? error.message
+            : "There was an unknown error. Please try again.";
+        setErrorMessage(errorMsg);
       } finally {
         setIsLoading(false);
       }
