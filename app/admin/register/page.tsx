@@ -33,7 +33,7 @@ export default function Register() {
     }
   }, [isAdmin, status]);
 
-  async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onFormSubmission(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormSubmitted(true);
   
@@ -81,7 +81,7 @@ export default function Register() {
     <>
       {isAdmin && (
         <form
-          onSubmit={onFormSubmit}
+          onSubmit={onFormSubmission}
           className="flex w-3/4 max-w-[400px] flex-col"
         >
           <h1 className="mb-4 w-full text-2xl font-bold">Register</h1>

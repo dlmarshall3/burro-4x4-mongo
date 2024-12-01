@@ -95,7 +95,7 @@ export default function UpdateVehiclePage({
     }
   }
 
-  async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmission(event: React.FormEvent<HTMLFormElement>) {
     setFormSubmitted(true);
     event.preventDefault();
     const { update, files } = vehicleUpdate;
@@ -151,7 +151,7 @@ export default function UpdateVehiclePage({
           {isLoading && <Loader />}
 
           {!isLoading && (
-            <form onSubmit={onFormSubmit}>
+            <form onSubmit={onFormSubmission}>
               <div className="flex flex-col">
                 <h2 className="mb-4 text-2xl underline">
                   {vehicle?.year} {vehicle?.make} {vehicle?.model}

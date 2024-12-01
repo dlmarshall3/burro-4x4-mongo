@@ -46,7 +46,7 @@ export default function SetPasswordPage() {
       return "Passwords do not match.";
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onFormSubmission(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormSubmitted(true);
 
@@ -85,7 +85,7 @@ export default function SetPasswordPage() {
   return (
     <>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={onFormSubmission}
         className="flex w-3/4 max-w-[400px] flex-col"
       >
         <div className="mb-4">

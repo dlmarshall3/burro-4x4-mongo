@@ -77,7 +77,7 @@ export default function AddVehiclePage() {
     getNonAdminUsers();
   }, []);
 
-  async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onFormSubmission(event: FormEvent<HTMLFormElement>) {
     setFormSubmitted(true);
     event.preventDefault();
     const { year, make, model, clientId, file, clientName } = newVehicle;
@@ -155,7 +155,7 @@ export default function AddVehiclePage() {
   return (
     <>
       {isAdmin && (
-        <form onSubmit={onFormSubmit}>
+        <form onSubmit={onFormSubmission}>
           <div className="flex flex-col rounded-lg">
             <h2 className="mb-4 text-3xl">Add New Vehicle</h2>
             <div className="mb-4 flex flex-col">
