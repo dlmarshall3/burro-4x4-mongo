@@ -14,14 +14,14 @@ type Vehicle = {
     imageUrl: string;
   };
   vehicleUpdates: [VehicleUpdate];
-}
+};
 
 type VehicleUpdate = {
   _id: string;
   update: string;
   date: string;
   imageUrls: [string];
-}
+};
 
 export default function VehiclePage({
   params,
@@ -30,7 +30,9 @@ export default function VehiclePage({
 }) {
   const { id } = use(params);
   const [vehicle, setVehicle] = useState<Vehicle | null>(null);
-  const [vehicleName, setVehicleName] = useState("");
+  const [vehicleName, setVehicleName] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchVehicleData() {
@@ -41,9 +43,19 @@ export default function VehiclePage({
           setVehicle(reqVehicle);
           const { year, make, model } = reqVehicle.vehicle;
           setVehicleName(year + " " + make + " " + model);
+        } else {
+          throw new Error(
+            "There was an error loading the vehicle. Please try again.",
+          );
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error: unknown) {
+        const errorMsg =
+          error instanceof Error
+            ? error.message
+            : "There was an unknown error. Please try again.";
+        setErrorMessage(errorMsg);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -52,7 +64,7 @@ export default function VehiclePage({
 
   return (
     <div>
-      {vehicle ? (
+      {vehicle && !errorMessage && !isLoading && (
         <>
           <h2 className="mb-4 text-2xl underline">{vehicleName}</h2>
           <Image
@@ -68,8 +80,14 @@ export default function VehiclePage({
             ))}
           </div>
         </>
-      ) : (
-        <Loader />
+      )}
+      {isLoading && <Loader />}
+      {errorMessage && (
+        <>
+          {errorMessage && (
+            <h4 className="text-lg text-red-500">{errorMessage}</h4>
+          )}
+        </>
       )}
     </div>
   );

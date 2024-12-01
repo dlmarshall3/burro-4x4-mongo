@@ -1,10 +1,11 @@
 "use client";
 
-import Loader from "@/components/Loader";
-import VehicleCard from "@/components/VehicleCard";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+
+import Loader from "@/components/Loader";
+import VehicleCard from "@/components/VehicleCard";
 
 type Vehicle = {
   _id: string;
@@ -14,14 +15,13 @@ type Vehicle = {
   imageUrl: string;
   clientId: string;
   clientName: string;
-}
+};
 
 export default function ClientDashboard() {
   const { data: session } = useSession();
   const router = useRouter();
   const clientId = session?.user.id;
   const isAdmin = session?.user.admin;
-
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -43,13 +43,16 @@ export default function ClientDashboard() {
           const jsonVehicles = await response.json();
           setVehicles(jsonVehicles);
         } else {
-          setErrorMessage(
+          throw new Error(
             "There was an error retrieving your vehicles. Please try again.",
           );
         }
-      } catch (error) {
-        console.error(error);
-        setErrorMessage("No vehicles found.");
+      } catch (error: unknown) {
+        const errorMsg =
+          error instanceof Error
+            ? error.message
+            : "There was an unknown error. Please try again.";
+        setErrorMessage(errorMsg);
       }
     }
   }, [clientId]);

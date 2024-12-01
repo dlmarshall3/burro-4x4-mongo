@@ -19,11 +19,10 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(vehicle);
-  } catch (error) {
-    console.log(error);
+  } catch (error: unknown) {
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
